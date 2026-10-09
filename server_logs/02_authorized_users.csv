@@ -1,0 +1,4 @@
+server_id,participant_id,account,access_method,ssh_fingerprint,role
+SERVER_01,MEMBER_01,ACCOUNT_01,SSH,KEY_01,개발·실험 / 실제 참가자 ID 미확인
+SERVER_01,MEMBER_01,PLATFORM_ACCOUNT_01,Runpod console,N/A,공유 플랫폼 계정 / 비SSH
+SERVER_01,MEMBER_02,PLATFORM_ACCOUNT_01,Runpod console,N/A,공유 플랫폼 계정 / 서버 SSH 계정·키는 미확인
