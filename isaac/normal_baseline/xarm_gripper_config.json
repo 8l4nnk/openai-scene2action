@@ -1,0 +1,20 @@
+{
+  "model": "UFACTORY xArm Gripper",
+  "configuration_basis": "User-provided KAIST quotation dated 2026-06-16, item 2",
+  "quoted_stroke_mm": 84.0,
+  "quoted_payload_kg": 5.0,
+  "hardware_revision": null,
+  "finger_pad_geometry_verified": false,
+  "physical_payload_tested": false,
+  "isaac_sim_asset": "/Isaac/Robots/Ufactory/xarm6/xarm6.usd",
+  "gripper_prim": "/World/XArm6/gripper",
+  "runtime_articulation": "/World/XArm6/world",
+  "drive_joint": "drive_joint",
+  "open_position_deg": 3.276517869194621,
+  "expected_open_aperture_m": 0.084,
+  "aperture_tolerance_m": 0.0005,
+  "open_calibration": "Link geometry fitted to actual collision-mesh bounds in xarm6-approach-01.json; restrict opening without scaling the asset. Requires runtime verification.",
+  "closed_position_deg": 48.0,
+  "usd_joint_limits_deg": [0.0, 48.7014],
+  "note": "84 mm is the quoted hardware stroke. The USD default opening measured 88.883 mm; the restricted angular opening targets an 84 mm gap between collision-mesh bounds. Hardware revision and contact-pad equivalence remain unverified."
+}

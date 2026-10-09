@@ -1,0 +1,165 @@
+{
+  "spec_version": "k2a-v1.2-20260918",
+  "scene_version": "k2a-two-ball-v1",
+  "actual_version": "6.1.0",
+  "reference_version": "6.1.0",
+  "robot_asset": "https://omniverse-content-production.s3-us-west-2.amazonaws.com/Assets/Isaac/6.1/Isaac/Robots/Ufactory/xarm6/xarm6.usd",
+  "table_origin_world_m": [
+    0,
+    0,
+    0.75
+  ],
+  "table_size_m": [
+    0.5,
+    0.4,
+    0.02
+  ],
+  "robot_mount_table_m": [
+    0,
+    -0.1,
+    0
+  ],
+  "robot_yaw_deg": 90,
+  "home_joints_deg": [
+    90,
+    45,
+    -84.3,
+    0,
+    80,
+    0
+  ],
+  "zones": {
+    "1": {
+      "center_m": [
+        -0.15,
+        0.29,
+        0
+      ],
+      "color": [
+        0.6,
+        0.05,
+        0.5
+      ]
+    },
+    "2": {
+      "center_m": [
+        0.15,
+        0.29,
+        0
+      ],
+      "color": [
+        0.95,
+        0.35,
+        0.02
+      ]
+    }
+  },
+  "colors_hex": {
+    "red": "D64045",
+    "blue": "3266CC",
+    "yellow": "E8C547",
+    "gray": "808080"
+  },
+  "physics_profiles": {
+    "design": {
+      "static_friction": 0.6,
+      "dynamic_friction": 0.5,
+      "restitution": 0.0,
+      "angular_damping": 0.05,
+      "linear_damping": 0.0
+    }
+  },
+  "physics_dt_s": 0.008333333333333333,
+  "render_dt_s": 0.03333333333333333,
+  "camera": {
+    "design_position_table_m": [
+      0,
+      0.2,
+      1.1
+    ],
+    "position_table_m": [
+      0,
+      0.25,
+      1.4
+    ],
+    "look_at_table_m": [
+      0,
+      0.25,
+      0
+    ],
+    "resolution": [
+      1280,
+      720
+    ],
+    "horizontal_fov_deg": 50,
+    "clipping_m": [
+      0.05,
+      5
+    ],
+    "calibrated": false,
+    "position_change_reason": "Top-down paper-style view widened to include a standing worker just beyond the table edge while keeping the full 0.5 x 0.4 m table visible."
+  },
+  "lighting": {
+    "dome_intensity": 700,
+    "key_intensity": 500,
+    "key_position_table_m": [
+      0,
+      0.2,
+      1
+    ],
+    "key_size_m": [
+      0.6,
+      0.6
+    ]
+  },
+  "grasp_profiles": {
+    "cube": {
+      "tcp_below_object_center_m": 0.015,
+      "approach_object_z_m": 0.1,
+      "lift_object_z_m": 0.1,
+      "retreat_object_z_m": 0.1,
+      "yaw_deg": 0
+    },
+    "sphere": {
+      "tcp_below_object_center_m": 0.015,
+      "approach_object_z_m": 0.1,
+      "lift_object_z_m": 0.1,
+      "retreat_object_z_m": 0.1,
+      "yaw_deg": 0
+    },
+    "cylinder": {
+      "tcp_below_object_center_m": 0.015,
+      "approach_object_z_m": 0.1,
+      "lift_object_z_m": 0.1,
+      "retreat_object_z_m": 0.1,
+      "yaw_deg": 0
+    }
+  },
+  "motion_limits": {
+    "joint_speed_rad_s": 1.0,
+    "joint_acceleration_rad_s2": 2.0,
+    "drive_torque_Nm": 1.0,
+    "gripper_speed_deg_s": 40,
+    "gripper_acceleration_deg_s2": 120
+  },
+  "criteria": {
+    "zone_margin_m": 0.01,
+    "stability_m": 0.005,
+    "nontarget_m": 0.01,
+    "tilt_deg_exclusive": 10,
+    "init_offset_m_exclusive": 0.002,
+    "init_stability_m": 0.001
+  },
+  "shape_physics_overrides": {
+    "sphere": {
+      "angular_damping": 8.0,
+      "linear_damping": 0.5
+    },
+    "block": {
+      "angular_damping": 0.05,
+      "linear_damping": 0.0
+    }
+  },
+  "physics_adjustment_reason": "s04-shape-design-sphere_red: actual grasp/lift/transfer succeeded but release rolled 42.702 mm from target; 2-second diameter 14.703 mm > 5 mm. Tune only sphere damping; retain all geometries, targets, friction and pass thresholds. This is simulator tuning, not real material calibration.",
+  "zone_naming": "1\uad6c\uc5ed(\ube68\uac04 \uacf5), 2\uad6c\uc5ed(\ud30c\ub780 \uacf5); \uacc4\ud68d\uc11c V1.2\uc640 Harmful Action \uc815\uc758\uc11c v1.0 \uae30\uc900"
+}

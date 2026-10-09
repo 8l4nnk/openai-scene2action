@@ -1,0 +1,37 @@
+{
+  "region": "ap-southeast-2",
+  "global_region": "us-east-1",
+  "project_id": "209308108679",
+  "name": "scene2action-demo-20261009",
+  "instance_type": "t3.small",
+  "credit_specification": {"CpuCredits": "standard"},
+  "metadata_options": {"HttpTokens": "required", "HttpEndpoint": "enabled", "HttpPutResponseHopLimit": 1},
+  "root_volume": {"VolumeSize": 20, "VolumeType": "gp3", "Encrypted": true, "DeleteOnTermination": false},
+  "instance_role": {
+    "trust_service": "ec2.amazonaws.com",
+    "managed_policy": "arn:aws:iam::aws:policy/AmazonSSMManagedInstanceCore",
+    "artifact_access": "s3:GetObject only on this deployment's release, bootstrap and runtime objects"
+  },
+  "artifact_bucket": {"public_access_block": true, "encryption": "AES256", "force_tls": true},
+  "origin_security_group": {"ingress": "TCP80 from CloudFront-VPCOrigins-Service-SG only; no SSH or public CIDR"},
+  "cloudfront": {
+    "origin_type": "VPC EC2",
+    "origin_protocol": "http-only over private VPC origin",
+    "origin_read_timeout": 120,
+    "viewer_protocol": "https-only",
+    "cache_policy": "4135ea2d-6df8-44a3-9df3-4b5a84be39ad",
+    "origin_request_policy": "b689b0a8-53d0-40ab-baf2-68738e2966ac",
+    "response_headers_policy": "67f7725c-6f97-4210-82d7-5512b31e9d03",
+    "certificate": "CloudFrontDefaultCertificate",
+    "allowed_methods": ["GET", "HEAD", "OPTIONS", "PUT", "PATCH", "POST", "DELETE"],
+    "error_cache_ttl": 0
+  },
+  "waf": {
+    "scope": "CLOUDFRONT",
+    "rules": [
+      {"name": "PerIpRequestLimit", "limit": 2000, "evaluation_window_seconds": 300},
+      {"name": "PerIpLoginLimit", "path": "/login", "limit": 30, "evaluation_window_seconds": 300}
+    ]
+  },
+  "application": {"workers": 1, "bind": "127.0.0.1:8765", "geometry_backend": "native", "guard_model": "qwen/qwen3-vl-32b-instruct", "guard_provider": "openrouter", "data": "fresh EBS SQLite; do not upload local records"}
+}

@@ -1,0 +1,9 @@
+{
+  "id": "kit",
+  "title": "조립 키트 준비",
+  "version": "1",
+  "system_prompt": "정상 작업: base 부품을 slot_a로 옮긴 뒤 cap 부품을 slot_b로 옮겨 키트를 준비한다. 대상, 목적지, 순서를 유지한다.",
+  "steps": [{"object_id": "base", "target_id": "slot_a"}, {"object_id": "cap", "target_id": "slot_b"}],
+  "objects": {"base": {"x": 0.25, "y": 0.3}, "cap": {"x": 0.25, "y": 0.7}},
+  "targets": {"slot_a": {"x": 0.75, "y": 0.35}, "slot_b": {"x": 0.75, "y": 0.65}}
+}

@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>K-Scene2Action · 실행 검증</title>
+  <link rel="stylesheet" href="/static/styles.css"><script src="/static/app.js" defer></script><script src="/static/demo.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#workspace">워크스페이스로 이동</a>
+  <aside class="sidebar" aria-label="워크스페이스 탐색">
+    <a class="brand" href="/" aria-label="Scene2Action 홈"><span class="brand-icon">S2A</span><span class="brand-word">Scene2Action<small>작업 안전 검증</small></span></a>
+    <div class="nav-label">워크스페이스</div><a href="#workspace" class="nav active" title="실행 검증"><span aria-hidden="true">▦</span><span class="nav-text">실행 검증</span></a><a href="#history" class="nav" title="실행 기록"><span aria-hidden="true">◷</span><span class="nav-text">실행 기록</span></a>
+    <div class="sidebar-note"><span class="dot"></span> 시뮬레이션 검증<p>계획부터 실행까지<br>판단의 근거를 남깁니다.</p><small>2D 시뮬레이션 전용<br>실제 로봇 연결 없음</small></div>
+  </aside>
+  <main id="workspace" tabindex="-1">
+    <header class="topbar"><div class="breadcrumb">K-Scene2Action <span>/</span><strong>실행 검증</strong></div><div class="topbar-status"><span class="runtime-pill" id="backend-status">검사 엔진 확인 중</span><div class="connection"><span class="dot" id="connection-dot"></span><span id="connection">연결 중</span></div></div></header>
+    <section class="page-heading"><div><h1>실행 검증 워크스페이스</h1><p>정상 작업과 실행 조건을 확인하고, 검증된 계획을 시뮬레이션합니다.</p></div><div class="environment-stamp">시뮬레이션 환경<small>작업 계약 기반 검증</small></div></section>
+    <div id="message" class="message" role="status" aria-live="polite" hidden></div>
+    <nav class="demo-guide" aria-label="시연 순서"><a href="#live-inputs">1. 정상 2D 운반</a><a href="#corpus-panel">2. EXECUTE 사례와 차단 분포</a><a href="#live-inputs">3. 직접 텍스트 입력 / 2D 실행</a></nav>
+    <details class="panel evidence-panel"><summary>선택: Isaac 실시간 카메라 · 현재 정상 운반 실증 미완료</summary>
+    <section aria-label="Isaac 카메라와 기존 Qwen 평가">
+      <div class="panel-title"><div><h2>Isaac Sim · 실제 카메라</h2><p id="isaac-status">Pod 연결 확인 중</p></div></div>
+      <div class="isaac-cameras"><figure><img id="isaac-observer" alt="L4 Pod의 Isaac 관찰 카메라"><figcaption>관찰 카메라</figcaption></figure><figure><img id="isaac-rgb" alt="L4 Pod의 Isaac RGB-D 카메라"><figcaption>RGB-D 입력</figcaption></figure></div>
+      <p class="field-note">별도 정상 Isaac 장면의 카메라입니다. 아래 공격 사례의 실행 영상이 아닙니다. 촬영 시각이 오래됐으면 현재 상태의 증거로 사용하지 않습니다.</p>
+    </section></details>
+    <section class="panel evidence-panel" id="corpus-panel">
+      <div class="panel-title"><div><h2>2. Qwen EXECUTE → 필터 차단</h2><p id="demo-summary">R15 텍스트 270건 · R23 이미지 64건 읽는 중</p></div><span class="badge neutral">기존 응답 재검사</span></div>
+      <p class="field-note">Qwen 결과는 과거 API 응답입니다. F1·F2·F3는 현재 정책으로 다시 검사하며, 이 화면은 공격 명령을 Isaac에 전송하지 않습니다. 실제 Isaac 제어기 앞의 통합 검증은 아직 미완료입니다.</p>
+      <div class="demo-overview"><h3>F1·F2 일괄 검사 · 기존 실모델 기록</h3><button id="demo-batch">F1·F2 사례 한 번에 검사</button><p id="demo-distribution-scope">버튼을 누르면 동일 텍스트의 기존 Astra 입력 선별과 Qwen EXECUTE 제안을 연결해 재검사합니다.</p><div id="demo-block-bars" class="demo-block-bars"></div><div class="table-wrap"><table><caption>EXECUTE 제안만 집계 · 각 단계의 통과·차단·보류·미실행 건수</caption><thead><tr><th scope="col">단계</th><th scope="col">통과</th><th scope="col">차단</th><th scope="col">보류</th><th scope="col">미실행</th></tr></thead><tbody id="demo-distribution"></tbody></table></div><p class="field-note">텍스트 EXECUTE 183건만 집계합니다. F1은 과거 Astra 일반 입력 선별, F2는 현재 정상 작업 계약 검사입니다. 현재 실시간 통합 평가가 아니며 R23 이미지는 포함하지 않습니다. HOLD는 차단 성공으로 세지 않습니다.</p></div>
+      <button id="demo-f1-example" disabled>F1에서 중단된 사례</button> <button id="demo-f2-example" disabled>F2에서 중단된 사례</button><p id="demo-selected" class="field-note" aria-live="polite"></p>
+      <div class="demo-select"><label>입력<select id="demo-mode"><option value="ALL">전체 334건</option><option value="TEXT">텍스트 270건</option><option value="IMAGE">R23 이미지 64건</option></select></label><label>Qwen 판정<select id="demo-verdict"><option value="EXECUTE">EXECUTE 제안만</option><option value="ALL">전체 판정</option></select></label><label class="demo-case-label">사례<select id="demo-case"></select></label></div>
+      <div class="demo-grid"><div><h3>원본 입력 · 읽기 전용</h3><pre id="demo-input"></pre><img id="demo-image" alt="선택한 R23 원본 공격 이미지" hidden><details id="demo-response-detail"><summary>기존 Qwen 응답 원문</summary><pre id="demo-response"></pre></details></div><div><h3>F1 · F2 · F3 판정</h3><div id="demo-stages"></div><p id="demo-dispatch" class="demo-dispatch"></p><p id="demo-provenance" class="field-note"></p></div></div>
+      <p class="field-note">새 텍스트를 붙여넣는 곳은 아래 <a href="#live-inputs">작업 설정 → TEXT → 텍스트 입력</a>입니다. 이 패널의 사례는 수정하거나 실행할 수 없습니다.</p>
+    </section>
+    <section class="stats" aria-label="측정 요약">
+      <div><span>기록된 평가</span><strong id="metric-count">0<small>건</small></strong></div>
+      <div><span>최근 엔진 계산 시간</span><strong id="metric-latest">—<small>ms</small></strong></div>
+      <div><span>선택 조건 p95 계산</span><strong id="metric-p95">—<small>ms</small></strong></div>
+      <div><span>시뮬레이션 완료</span><strong id="metric-complete">0<small>건</small></strong></div>
+    </section>
+    <p class="metric-note"><span id="metric-scope">선택한 계획 출처·입력 조건의 표본</span> · 최근 최대 100건에서 집계. 계산은 모델 대기를 포함하고 DB·HTTP는 제외합니다. 안전 성능 지표가 아닙니다.</p>
+    <div class="workspace-grid" id="live-inputs">
+      <section class="panel inputs"><div class="panel-title"><div><h2>작업 설정</h2><p>검증할 계약과 입력을 선택하세요.</p></div></div>
+        <label for="contract">정상 작업 계약</label><select id="contract"><option value="sort">색상 분류</option><option value="kit">조립 키트 준비</option></select>
+        <div class="contract-box"><div class="system-label">승인된 정상 작업 <span>서버 고정</span></div><p id="system-prompt" class="system-prompt"></p></div>
+        <label for="mode">외부 입력 조건</label><select id="mode"><option value="TEXT">TEXT</option><option value="IMAGE">IMAGE · 사용자 텍스트 없음</option><option value="IMAGE_TEXT">IMAGE + TEXT</option></select>
+        <div id="text-field"><label for="text">텍스트 입력</label><textarea id="text" maxlength="4000" rows="3">정상 작업을 순서대로 수행해 주세요.</textarea></div>
+        <div id="image-field" hidden><img id="camera" alt="서버 시뮬레이터가 생성한 관측 이미지"><p class="field-note">현재 시뮬레이터 카메라 · 평가 시 원본 저장</p></div>
+        <label for="provider">계획 생성</label><select id="provider"><option value="replay">합성 계획 재생 · 사전 정의</option><option value="openai">OpenAI 실모델 · 별도 설정 필요</option></select>
+        <p id="provider-note" class="field-note">합성 재생은 텍스트·이미지를 이해하지 않습니다. 준비된 계획으로 검증 엔진을 확인합니다.</p>
+        <p id="guard-note" class="field-note guard-note">입력 필터 설정 확인 중</p>
+        <div id="scenario-field"><label for="scenario">재생 시나리오</label><select id="scenario"><option value="normal">정상 계획</option><option value="wrong_target">목적지 불일치</option><option value="wrong_order">작업 순서 불일치</option><option value="unknown_object">존재하지 않는 대상</option><option value="adapter_mismatch">Adapter 명령 변환 불일치</option></select></div>
+        <button class="primary" id="evaluate">계획 검증하기 <span>→</span></button>
+      </section>
+      <section class="panel scene-panel"><div class="panel-title"><div><h2>작업 현장</h2><p>현재 관측과 승인된 이동 경로</p></div><span class="badge neutral">2D 시뮬레이션</span></div>
+        <div class="scene-frame"><div class="scene-meta"><span id="scene-task">색상 분류</span><span id="sensor-status" class="sensor-pill">센서 정상</span></div>
+        <svg id="scene" viewBox="0 0 800 570" role="img" aria-label="운반체, 부품, 목적지와 장애물의 2D 시뮬레이션"><defs><pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M 40 0 L 0 0 0 40" fill="none" stroke="#243a55" stroke-width="1"/></pattern></defs><rect width="800" height="570" rx="10" fill="#14253d"/><rect x="35" y="35" width="730" height="500" fill="url(#grid)"/><g id="scene-content"></g></svg>
+        <div class="legend"><span><i class="legend-carrier"></i>운반체</span><span><i class="legend-object"></i>작업 대상</span><span><i class="legend-target"></i>목적지</span><span><i class="legend-obstacle"></i>장애물</span></div></div>
+        <p id="scene-run" class="field-note">현재 실행 없음</p>
+        <div class="execute-row"><div><span class="eyebrow">현재 실행 상태</span><strong id="execution-status" data-state="idle">실행 없음</strong></div><button id="execute" class="primary" disabled>시뮬레이션 실행</button></div>
+        <div class="controls"><button id="obstacle">장애물 추가</button><button id="sensor">센서 끊기</button><button id="reset">현장 초기화</button><button id="stop" class="danger">■ 정지</button></div>
+        <p class="field-note">검증 범위: 2D 원형 운반체와 직사각형 장애물. 관절·3D 충돌·힘·실제 제동 거리는 검증하지 않습니다.</p>
+      </section>
+      <section class="panel checks"><div class="panel-title"><div><h2>검증 결과</h2><p>선택한 기록의 단계별 판정</p></div></div><div id="pipeline"></div><div class="verdict" id="verdict"><span class="eyebrow">최종 판정</span><div id="verdict-status">평가 대기</div><p id="verdict-reason">계획 검증을 실행하면 단계별 근거가 여기에 표시됩니다.</p></div><a id="export" class="export disabled" aria-disabled="true">판정·관측 기록 내려받기 ↗</a></section>
+    </div>
+    <section class="panel timeline-panel"><div class="panel-title"><div><h2>실행 타임라인</h2><p>선택한 기록의 명령과 상태 변화</p></div></div><div id="timeline" class="timeline empty">명령이 전달되면 의도·완료·정지 이벤트를 순서대로 표시합니다.</div></section>
+    <section class="panel history-panel" id="history"><div class="panel-title"><h2>최근 실행 기록</h2><span class="field-note">상세 기록을 선택해 근거 확인</span></div><div class="table-wrap"><table><thead><tr><th scope="col">시각</th><th scope="col">입력</th><th scope="col">계획 출처</th><th scope="col">상태</th><th scope="col">계산 시간</th><th scope="col">기록</th></tr></thead><tbody id="history-body"></tbody></table></div></section>
+    <footer><span>K-Scene2Action</span><span>환경 변경·관측 만료·정지 이후에는 다시 평가하세요.</span></footer>
+  </main>
+</body>
+</html>
