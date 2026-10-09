@@ -1,0 +1,13 @@
+# server_id=SERVER_01
+# source=server-authentication-log-unavailable
+# requested_range=2026-10-09T12:10:04.688000+09:00 ~ 2026-10-09T16:18:57.859751+09:00
+# covered_range=UNKNOWN
+# collected_at=2026-10-09T16:18:57.859751+09:00
+# authentication_log_collection=FAILED
+# reason=SSH authentication rejected: Permission denied (publickey,password)
+# supplementary_container_system_log_collection=FAILED (Runpod API timeout; two attempts)
+# redacted_fields=host,account,source_ip,key_fingerprint
+# limitations=No server authentication lines were acquired. This does not mean zero logins.
+# supplemental_evidence=Codex ZIP / runpod/client_remote_execution_records.jsonl
+# supplemental_evidence_is_client_execution_metadata_not_sshd_authentication_log
+# successful_source_ip_pairs=UNKNOWN; 04 contains its header only.
